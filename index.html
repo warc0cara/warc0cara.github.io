@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisar Filmes & Séries em Vários Sites</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .results { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Pesquisar Filmes & Séries</h1>
+    <form id="searchForm">
+        <!-- Campo de entrada para o nome do filme -->
+        <input type="text" id="query" placeholder="Digite o nome do filme ou série" required="">
+        <!-- Botão para iniciar a busca -->
+        <button type="submit">Pesquisar</button>
+    </form>
+    <!-- Div para exibir os resultados -->
+    <div class="results" id="results"></div>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Previne o comportamento padrão do formulário de recarregar a página
+            const query = document.getElementById('query').value;  // Obtém o valor do campo de texto
+            searchMovies(query);  // Chama a função searchMovies passando o termo de busca
+        });
+
+        function searchMovies(query) {
+            // Lista de sites nos quais faremos a busca
+            const sites = [
+                'supertela.vg',
+                'mflix.plus',
+                'megaflix.sh',
+                'obaflix.click',
+                'hyper.hypermyapp.site',
+                'obaflix.to',
+                'topflix.sh',
+                'furiaflix.cc',
+                'pobreflix.net.br',
+                'visioncine.love'
+            ];
+
+            const resultsDiv = document.getElementById('results');  // Obtém a div onde os resultados serão exibidos
+            resultsDiv.innerHTML = '';  // Limpa os resultados anteriores
+
+            // Exibe os resultados de busca na mesma página
+            sites.forEach(site => {
+                const url = `https://www.google.com/search?q=${encodeURIComponent(query + ' site:' + site)}`;  // Constrói a URL de busca no Google para cada site
+                fetch(`https://cors-anywhere.herokuapp.com/${url}`)
+                    .then(response => response.text())
+                    .then(data => {
+                        // Cria um parser para analisar o HTML da resposta
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(data, 'text/html');
+                        const links = [...doc.querySelectorAll('a')].map(anchor => anchor.href).filter(href => href.includes(site));
+
+                        // Exibe os resultados na página
+                        const resultsFromSite = document.createElement('p');
+                        resultsFromSite.innerHTML = `Resultado da busca em <a href="${url}" target="_blank">${site}</a>:`;
+                        resultsDiv.appendChild(resultsFromSite);
+
+                        if (links.length > 0) {
+                            const linksList = document.createElement('ul');
+                            links.forEach(link => {
+                                const listItem = document.createElement('li');
+                                const anchor = document.createElement('a');
+                                anchor.href = link;
+                                anchor.textContent = link;
+                                listItem.appendChild(anchor);
+                                linksList.appendChild(listItem);
+                            });
+                            resultsDiv.appendChild(linksList);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao buscar resultados:', error);  // Exibe o erro no console se houver
+                        // Exibe uma mensagem de erro
+                        const errorMessage = document.createElement('p');
+                        errorMessage.textContent = `Erro ao buscar resultados em ${site}.`;
+                        resultsDiv.appendChild(errorMessage);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

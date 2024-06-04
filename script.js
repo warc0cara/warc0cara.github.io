@@ -1,16 +1,16 @@
 document.getElementById('searchForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const query = document.getElementById('query').value;
-    searchMovies(query);
+    event.preventDefault(); // Previne o comportamento padrão do formulário de recarregar a página
+    const query = document.getElementById('query').value; // Obtém o valor do campo de texto
+    searchMovies(query); // Chama a função searchMovies passando o termo de busca
 });
 
 function searchMovies(query) {
-    const resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = '';
+    const resultsDiv = document.getElementById('results'); // Obtém a div onde os resultados serão exibidos
+    resultsDiv.innerHTML = ''; // Limpa os resultados anteriores
 
-    // Fazer uma solicitação AJAX para o script PHP
+    // Fazer uma solicitação AJAX para o script PHP no Netlify
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `search.php?query=${encodeURIComponent(query)}`, true);
+    xhr.open('GET', `https://wtv123.netlify.app/search.php?query=${encodeURIComponent(query)}`, true);
     xhr.onload = function() {
         if (xhr.status >= 200 && xhr.status < 400) {
             const data = JSON.parse(xhr.responseText);

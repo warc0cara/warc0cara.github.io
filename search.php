@@ -1,60 +1,51 @@
-<?php
+document.getElementById('searchForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const query = document.getElementById('query').value;
+    searchMovies(query);
+});
 
-// Verifica se a consulta de pesquisa foi enviada
-if (isset($_GET['query'])) {
-    $query = $_GET['query'];
+function searchMovies(query) {
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = '';
 
-    // Lista de sites onde faremos a busca
-    $sites = [
-        'supertela.vg',
-        'mflix.plus',
-        'megaflix.sh',
-        'obaflix.click',
-        'hyper.hypermyapp.site',
-        'obaflix.to',
-        'topflix.sh',
-        'furiaflix.cc',
-        'pobreflix.net.br',
-        'visioncine.love'
-    ];
-
-    $results = [];
-
-    // Faz uma solicitação ao Google para cada site
-    foreach ($sites as $site) {
-        $url = "https://www.google.com/search?q=" . urlencode("$query site:$site");
-        $html = file_get_contents($url);
-        if ($html !== false) {
-            // Analisa o HTML da resposta do Google
-            $dom = new DOMDocument();
-            libxml_use_internal_errors(true);
-            $dom->loadHTML($html);
-            libxml_clear_errors();
-            $links = $dom->getElementsByTagName('a');
-            $siteLinks = [];
-            foreach ($links as $link) {
-                $href = $link->getAttribute('href');
-                if (strpos($href, "/url?q=") === 0) {
-                    $href = urldecode(substr($href, 7, strpos($href, "&") - 7));
-                    if (strpos($href, "http") === 0) {
-                        $siteLinks[] = $href;
-                    }
-                }
-            }
-            $results[] = ['site' => $site, 'links' => $siteLinks];
+    // Fazer uma solicitação AJAX para o script PHP no Netlify
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `https://wtv123.netlify.app/search.php?query=${encodeURIComponent(query)}`, true);
+    xhr.onload = function() {
+        if (xhr.status >= 200 && xhr.status < 400) {
+            const data = JSON.parse(xhr.responseText);
+            displayResults(data);
         } else {
-            // Se houver um erro ao acessar o Google, adiciona uma entrada vazia para o site
-            $results[] = ['site' => $site, 'links' => []];
+            console.error('Erro ao buscar resultados:', xhr.statusText);
+            resultsDiv.innerHTML = '<p>Erro ao buscar resultados. Por favor, tente novamente mais tarde.</p>';
         }
-    }
-
-    // Retorna os resultados como JSON
-    header('Content-Type: application/json');
-    echo json_encode($results);
-} else {
-    // Se a consulta de pesquisa não foi enviada, retorna um erro
-    http_response_code(400);
-    echo "Consulta de pesquisa não fornecida.";
+    };
+    xhr.onerror = function() {
+        console.error('Erro ao buscar resultados.');
+        resultsDiv.innerHTML = '<p>Erro ao buscar resultados. Por favor, tente novamente mais tarde.</p>';
+    };
+    xhr.send();
 }
 
-?>
+function displayResults(data) {
+    const resultsDiv = document.getElementById('results');
+    data.forEach(siteResult => {
+        const siteResultsDiv = document.createElement('div');
+        siteResultsDiv.innerHTML = `<h3>Resultado da busca em ${siteResult.site}:</h3>`;
+        if (siteResult.links.length > 0) {
+            const linksList = document.createElement('ul');
+            siteResult.links.forEach(link => {
+                const listItem = document.createElement('li');
+                const anchor = document.createElement('a');
+                anchor.href = link;
+                anchor.textContent = link;
+                listItem.appendChild(anchor);
+                linksList.appendChild(listItem);
+            });
+            siteResultsDiv.appendChild(linksList);
+        } else {
+            siteResultsDiv.innerHTML += '<p>Nenhum resultado encontrado.</p>';
+        }
+        resultsDiv.appendChild(siteResultsDiv);
+    });
+}

@@ -3,86 +3,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pesquisar Filmes & Séries em Vários Sites</title>
+    <title>Pesquisar Filmes & Séries v7</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .results { margin-top: 20px; }
+        body { 
+            font-family: Arial, sans-serif;
+            background-image: url('https://wallpapers.com/images/hd/abstract-metallic-red-and-black-pattern-yalrzxe26i78uxit.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .site {
+            width: 32px;
+            height: 32px;
+            margin: 5px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .site:hover {
+            transform: scale(1.2);
+        }
+        .site img {
+            width: 100%;
+            height: 100%;
+        }
+        .results { 
+            margin-top: 20px; 
+        }
+        #searchForm {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #query {
+            width: 320px; /* Ajuste a largura conforme necessário */
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+        #searchForm button {
+            background-color: red; /* Botão vermelho */
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #searchForm button:hover {
+            background-color: black; /* Ao passar o mouse, fica preto */
+        }
+        a {
+            color: red;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: yellow;
+        }
+        a:visited {
+            color: yellow; /* Altera a cor dos links visitados para amarelo */
+        }
+		.update-message {
+			text-align: center;
+			color: yellow;
+			margin-top: 20px;
+		font-size: 10px; /* Ajuste o tamanho da fonte conforme desejado */
+}
     </style>
 </head>
 <body>
-    <h1>Pesquisar Filmes & Séries v3</h1>
+    <h1 style="text-align: center;">Pesquisar Filmes & Séries v7</h1>
     <form id="searchForm">
         <!-- Campo de entrada para o nome do filme -->
-        <input type="text" id="query" placeholder="Digite o nome do filme ou série" required="">
+        <input type="text" id="query" placeholder="Digite o nome do filme ou série e clique em pesquisar" required="">
         <!-- Botão para iniciar a busca -->
         <button type="submit">Pesquisar</button>
     </form>
+
+    <div class="container">
+        <!-- Adicione os ícones dos sites com os respectivos links -->
+        <!-- Aqui você adiciona os ícones -->
+    </div>
+    
     <!-- Div para exibir os resultados -->
     <div class="results" id="results"></div>
-
+	
     <script>
-        document.getElementById('searchForm').addEventListener('submit', function(event) {
-            event.preventDefault();  // Previne o comportamento padrão do formulário de recarregar a página
-            const query = document.getElementById('query').value;  // Obtém o valor do campo de texto
-            searchMovies(query);  // Chama a função searchMovies passando o termo de busca
-        });
-
-        function searchMovies(query) {
-            // Lista de sites nos quais faremos a busca
-            const sites = [
-                'supertela.vg',
-                'mflix.plus',
-                'megaflix.sh',
-                'obaflix.click',
-                'hyper.hypermyapp.site',
-                'obaflix.to',
-                'topflix.sh',
-                'furiaflix.cc',
-                'pobreflix.net.br',
-                'visioncine.love'
-            ];
-
-            const resultsDiv = document.getElementById('results');  // Obtém a div onde os resultados serão exibidos
-            resultsDiv.innerHTML = '';  // Limpa os resultados anteriores
-
-            // Exibe os resultados de busca na mesma página
-            sites.forEach(site => {
-                const url = `https://www.google.com/search?q=${encodeURIComponent(query + ' site:' + site)}`;  // Constrói a URL de busca no Google para cada site
-                fetch(`https://cors-anywhere.herokuapp.com/${url}`)
-                    .then(response => response.text())
-                    .then(data => {
-                        // Cria um parser para analisar o HTML da resposta
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(data, 'text/html');
-                        const links = [...doc.querySelectorAll('a')].map(anchor => anchor.href).filter(href => href.includes(site));
-
-                        // Exibe os resultados na página
-                        const resultsFromSite = document.createElement('p');
-                        resultsFromSite.innerHTML = `Resultado da busca em: <a href="${url}" target="_blank">${site}</a>`;
-                        resultsDiv.appendChild(resultsFromSite);
-
-                        if (links.length > 0) {
-                            const linksList = document.createElement('ul');
-                            links.forEach(link => {
-                                const listItem = document.createElement('li');
-                                const anchor = document.createElement('a');
-                                anchor.href = link;
-                                anchor.textContent = link;
-                                listItem.appendChild(anchor);
-                                linksList.appendChild(listItem);
-                            });
-                            resultsDiv.appendChild(linksList);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erro ao buscar resultados:', error);  // Exibe o erro no console se houver
-                        // Exibe uma mensagem de erro
-                        const errorMessage = document.createElement('p');
-                        errorMessage.textContent = `Erro ao buscar resultados em ${site}.`;
-                        resultsDiv.appendChild(errorMessage);
-                    });
-            });
-        }
+        // Aqui vai o script JavaScript para a busca e exibição dos resultados
     </script>
+</body>
+</html>
+
+    <div class="container">
+        <!-- Adicione os ícones dos sites com os respectivos links -->
+        <div class="site" onclick="searchSite('supertela.vg')">
+            <a href="https://supertela.vg" target="_blank"><img src="https://supertela.vg/wp-content/uploads/favicon-1.png" alt="supertela.vg"></a>
+        </div>
+        <div class="site" onclick="searchSite('mflix.plus')">
+            <a href="https://mflix.plus" target="_blank"><img src="https://mflix.plus/wp-content/uploads/2024/06/mflixlogo-1.png" alt="mflix.plus"></a>
+        </div>
+        <div class="site" onclick="searchSite('megaflix.sh')">
+            <a href="https://megaflix.sh" target="_blank"><img src="https://megaflix.sh/wp-content/uploads/2020/03/favicon-megaflix.png" alt="megaflix.sh"></a>
+        </div>
+        <div class="site" onclick="searchSite('obaflix.click')">
+            <a href="https://obaflix.click" target="_blank"><img src="https://i.imgur.com/VkjF3Nz.png" alt="obaflix.click"></a>
+        </div>
+        <div class="site" onclick="searchSite('hyper.hypermyapp.site')">
+            <a href="https://hyper.hypermyapp.site" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3600/3600921.png" alt="hyper.hypermyapp.site"></a>
+        </div>
+        <div class="site" onclick="searchSite('obaflix.to')">
+            <a href="https://obaflix.to" target="_blank"><img src="https://obaflix.to/wp-content/uploads/2024/03/cropped-unnamed-180x180.webp" alt="obaflix.to"></a>
+        </div>
+        <!-- Adicione os demais ícones aqui -->
+        <div class="site" onclick="searchSite('topflix.sh')">
+            <a href="https://topflix.sh" target="_blank"><img src="https://topflix.sh/images/favicon.ico" alt="topflix.sh"></a>
+        </div>
+        <div class="site" onclick="searchSite('furiaflix.cc')">
+            <a href="https://furiaflix.cc" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/6819/6819113.png" alt="furiaflix.cc"></a>
+        </div>
+        <div class="site" onclick="searchSite('pobreflix.net.br')">
+            <a href="https://pobreflix.net.br" target="_blank"><img src="https://pobreflix50.net/wp-content/uploads/2024/02/favicon-32x32-1.png" alt="pobreflix.net.br"></a>
+</div>
+<div class="site" onclick="searchSite('visioncine.love')">
+<a href="https://visioncine.love" target="_blank"><img src="https://visioncine.love/wp-content/uploads/2024/02/icon.png" alt="visioncine.love"></a>
+</div>
+<div class="site" onclick="searchSite('comandoflix.pro')">
+<a href="https://comandoflix.pro" target="_blank"><img src="https://comandoflix.pro/wp-content/uploads/2022/04/favFS.png" alt="comandoflix.pro"></a>
+</div>
+<div class="site" onclick="searchSite('filmesmega.online')">
+<a href="https://filmesmega.online" target="_blank"><img src="https://filmesmega.online/wp-content/uploads/2019/09/filmesmega-favicon-3.png" alt="filmesmega.online"></a>
+</div>
+<div class="site" onclick="searchSite('overflix.mov')">
+<a href="https://overflix.mov" target="_blank"><img src="https://overflix.mov/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_fav.ico" alt="overflix.mov"></a>
+</div>
+<div class="site" onclick="searchSite('vizerhd.org')">
+<a href="https://vizerhd.org" target="_blank"><img src="https://vizerhd.org/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_favicon.ico" alt="vizerhd.org"></a>
+</div>
+<div class="site" onclick="searchSite('pobreflixhd.red')">
+<a href="https://pobreflixhd.red" target="_blank"><img src="https://images.sftcdn.net/images/t_app-icon-m/p/cf488614-4c89-4077-a34e-fbcb41fdfad2/2846473599/pobreflix-filmes-series-f9h-logo" alt="pobreflixhd.red"></a>
+</div>
+<div class="site" onclick="searchSite('megaflix.click')">
+<a href="https://megaflix.click" target="_blank"><img src="https://i.imgur.com/UzgvLXC.png" alt="megaflix.click"></a>
+</div>
+<div class="site" onclick="searchSite('youcine.vision')">
+<a href="https://youcine.vision" target="_blank"><img src="https://youcine.vision/wp-content/uploads/2024/05/favicon.ico" alt="youcine.vision"></a>
+</div>
+<div class="site" onclick="searchSite('startflix.vip')">
+<a href="https://startflix.vip" target="_blank"><img src="https://startflix.vip/wp-content/uploads/2022/11/cropped-unnamed-32x32.png" alt="startflix.vip"></a>
+</div>
+<div class="site" onclick="searchSite('redecanais.in')">
+<a href="https://redecanais.in" target="_blank"><img src="https://redecanais.in/wp-content/uploads/2024/04/123movies-icon.png" alt="redecanais.in"></a>
+</div>
+<div class="site" onclick="searchSite('redecanais.dev')">
+<a href="https://redecanais.dev" target="_blank"><img src="https://redecanais.mov/templates/echo/img/favicon.ico" alt="redecanais.dev"></a>
+</div>
+</div>
+<!-- Mensagem de atualização -->
+<div class="update-message">
+    <p>*¹ atualize a página, se o ícone do site não aparecer, o mesmo pode estar em manutenção ou offline :(</p>
+    <p style="display: block;"></p>
+	<p>*² os sites contém propagandas :(</p>
+</div>
+
+<script>
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+        event.preventDefault();  // Previne o comportamento padrão do formulário de recarregar a página
+        const query = document.getElementById('query').value;  // Obtém o valor do campo de texto
+        searchMovies(query);  // Chama a função searchMovies passando o termo de busca
+    });
+
+    function searchMovies(query) {
+        // Lista de sites nos quais faremos a busca
+        const sites = [
+            'supertela.vg',
+            'mflix.plus',
+            'megaflix.sh',
+            'obaflix.click',
+            'hyper.hypermyapp.site',
+            'obaflix.to',
+            'topflix.sh',
+            'furiaflix.cc',
+            'pobreflix.net.br',
+            'visioncine.love',
+            'comandoflix.pro',
+            'filmesmega.online',
+            'overflix.mov',
+            'vizerhd.org',
+            'pobreflixhd.red',
+            'megaflix.click',
+            'youcine.vision',
+            'startflix.vip',
+            'redecanais.in',
+            'redecanais.dev'
+        ];
+
+        const resultsDiv = document.getElementById('results');  // Obtém a div onde os resultados serão exibidos
+        resultsDiv.innerHTML = '';  // Limpa os resultados anteriores
+
+        // Exibe os resultados de busca na mesma página
+        sites.forEach(site => {
+            const url = `https://www.google.com/search?q=${encodeURIComponent(query + ' site:' + site)}`;  // Constrói a URL de busca no Google para cada site
+            fetch(`https://cors-anywhere.herokuapp.com/${url}`)
+                .then(response => response.text())
+                .then(data => {
+                    // Cria um parser para analisar o HTML da resposta
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(data, 'text/html');
+                    const links = [...doc.querySelectorAll('a')].map(anchor => anchor.href).filter(href => href.includes(site));
+
+                    // Exibe os resultados na página
+                    const resultsFromSite = document.createElement('p');
+                    resultsFromSite.innerHTML = `Resultado da busca no site: <a href="${url}" target="_blank">${site}</a>`;
+                    resultsDiv.appendChild(resultsFromSite);
+
+                    if (links.length > 0) {
+                        const linksList = document.createElement('ul');
+                        links.forEach(link => {
+                            const listItem = document.createElement('li');
+                            const anchor = document.createElement('a');
+                            anchor.href = link;
+                            anchor.textContent = link;
+                            listItem.appendChild(anchor);
+                            linksList.appendChild(listItem);
+                        });
+                        resultsDiv.appendChild(linksList);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar resultados:', error);  // Exibe o erro no console se houver
+                    // Exibe uma mensagem de erro
+                    const errorMessage = document.createElement('p');
+                    errorMessage.textContent = `Erro ao buscar resultados em ${site}.`;
+                    resultsDiv.appendChild(errorMessage);
+                });
+        });
+    }
+</script>
+<!-- Informação adicional -->
+<div class="footer-info">
+    <p style="color: gray; font-size: 10px;"><a href="https://t.me/WARCN3T" target="_blank" style="color: gray;">byWARC</a></p>
+</div>
+</div>
 </body>
 </html>

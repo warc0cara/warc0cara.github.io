@@ -7,6 +7,7 @@
     <style>
         body { 
             font-family: Arial, sans-serif;
+			background-color: black; /* Define a cor de fundo como preto */
             /* background-image: url('https://raw.githubusercontent.com/warc0cara/warc0cara.github.io/main/fundo.jpg'); */
             background-size: cover;
             background-repeat: no-repeat;
@@ -14,6 +15,9 @@
             margin: 0;
             padding: 0;
 			height: 100vh; /* Define a altura do corpo como 100% da altura da tela */
+			display: flex;
+			flex-direction: column;
+		    min-height: 100vh; /* Define a altura mínima do corpo como 100% da altura da tela */
         }
         .container {
             display: flex;
@@ -37,7 +41,7 @@
             height: 100%;
         }
         .results { 
-            margin-top: 20px; 
+            margin-top: 20px;
         }
         #searchForm {
             display: flex;
@@ -97,7 +101,7 @@
         }
 		hr {
             border: none;
-            border-top: 1px solid gray; /* Adiciona uma linha horizontal cinza */
+            border-top: 1.5px solid gray; /* Adiciona uma linha horizontal cinza */
             margin-top: 20px;
             margin-bottom: 20px;
 }
@@ -202,7 +206,8 @@
 <a href="https://redecanais.dev" target="_blank"><img src="https://redecanais.mov/templates/echo/img/favicon.ico" alt="redecanais.dev"></a>
 </div>
 </div>
-<hr>
+<div>
+<hr> <!-- Adicione esta linha -->
 <!-- Adicione os ícones dos sites com os respectivos links -->
 <div class="container">
 <div class="site">
@@ -221,7 +226,7 @@
 
 <!-- Mensagem de atualização -->
 <div class="update-message">
-    <p>¹ atualize a página, se o ícone do site não aparecer, o mesmo pode estar em manutenção ou offline :(</p>
+    <p>¹ se o ícone do site não aparecer, o mesmo pode estar em manutenção ou offline :(</p>
     <p style="display: block;"></p>
 	<p>² os sites contém propagandas :(</p>
 </div>
@@ -269,7 +274,7 @@
         sites.forEach(site => {
             const url = `https://www.google.com/search?q=${encodeURIComponent(query + ' site:' + site)}`;  // Constrói a URL de busca no Google para cada site
             const resultFromSite = document.createElement('div');  // Cria um elemento para exibir os resultados do site atual
-            resultFromSite.innerHTML = `Resultado da busca no site: <a href="${url}" target="_blank">${site}</a>: <br>`;  // Cria um link para a busca no Google
+            resultFromSite.innerHTML = `Resultado da busca no site: <a href="${url}" target="_blank">${site}</a> <br>`;  // Cria um link para a busca no Google
             resultFromSite.classList.add('site-results');  // Adiciona uma classe para estilização
             resultsDiv.appendChild(resultFromSite);  // Adiciona o elemento à div de resultados
 

@@ -7,7 +7,7 @@
     <style>
         body { 
             font-family: Arial, sans-serif;
-            background-image: url('https://raw.githubusercontent.com/warc0cara/warc0cara.github.io/main/fundo.jpg');
+            /* background-image: url('https://raw.githubusercontent.com/warc0cara/warc0cara.github.io/main/fundo.jpg'); */
             background-size: cover;
             background-repeat: no-repeat;
             color: white;
@@ -22,14 +22,14 @@
             margin-top: 20px;
         }
         .site {
-            width: 32px;
-            height: 32px;
+            width: 42px;
+            height: 42px;
             margin: 5px;
             cursor: pointer;
             transition: transform 0.3s;
         }
         .site:hover {
-            transform: scale(1.2);
+            transform: scale(2);
         }
         .site img {
             width: 100%;
@@ -75,9 +75,34 @@
 			color: yellow;
 			margin-top: 20px;
 		font-size: 10px; /* Ajuste o tamanho da fonte conforme desejado */
+        }
+        .footer-info {
+			text-align: left;
+			margin-top: 20px;
+			margin-left: 20px; /* Adiciona margem à esquerda para o alinhamento */
+		}
+
+        .popup {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+        }
+		hr {
+            border: none;
+            border-top: 1px solid gray; /* Adiciona uma linha horizontal cinza */
+            margin-top: 20px;
+            margin-bottom: 20px;
 }
     </style>
 </head>
+
 <body>
     <h1 style="text-align: center;">Pesquisar Filmes & Séries v7</h1>
     <form id="searchForm">
@@ -86,50 +111,61 @@
         <!-- Botão para iniciar a busca -->
         <button type="submit">Pesquisar</button>
     </form>
-
-    <div class="container">
-        <!-- Adicione os ícones dos sites com os respectivos links -->
-        <!-- Aqui você adiciona os ícones -->
-    </div>
-    
+   
     <!-- Div para exibir os resultados -->
-    <div class="results" id="results"></div>
-	
-    <script>
-        // Aqui vai o script JavaScript para a busca e exibição dos resultados
-    </script>
+    <div class="results" id="results"></div>	
 </body>
+<script>
+    // Lista de URLs das imagens de fundo disponíveis
+    const backgrounds = [
+        'https://raw.githubusercontent.com/warc0cara/warc0cara.github.io/main/fundos/fundo.jpg',
+        'https://raw.githubusercontent.com/warc0cara/warc0cara.github.io/main/fundos/fundo_1.jpg',
+        'https://raw.githubusercontent.com/warc0cara/warc0cara.github.io/main/fundos/fundo_10.jpg',
+        'https://raw.githubusercontent.com/warc0cara/warc0cara.github.io/main/fundos/fundo_11.jpg',
+        'https://raw.githubusercontent.com/warc0cara/warc0cara.github.io/main/fundos/fundo_12.jpg',
+        'https://raw.githubusercontent.com/warc0cara/warc0cara.github.io/main/fundos/fundo_13.jpg',
+        'https://raw.githubusercontent.com/warc0cara/warc0cara.github.io/main/fundos/fundo_2.jpg',
+        'https://raw.githubusercontent.com/warc0cara/warc0cara.github.io/main/fundos/fundo_3.jpg',
+        'https://raw.githubusercontent.com/warc0cara/warc0cara.github.io/main/fundos/fundo_7.jpg',
+        'https://raw.githubusercontent.com/warc0cara/warc0cara.github.io/main/fundos/fundo_8.jpg',
+        'https://raw.githubusercontent.com/warc0cara/warc0cara.github.io/main/fundos/fundo_9.jpg'
+        // Adicione mais URLs de imagens de fundo conforme necessário
+    ];
+
+    // Seleciona aleatoriamente uma URL de imagem de fundo da lista
+    const randomBackground = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+
+    // Aplica a imagem de fundo selecionada ao estilo CSS do corpo da página
+    document.body.style.backgroundImage = `url('${randomBackground}')`;
+</script>
 </html>
 
-    <div class="container">
-        <!-- Adicione os ícones dos sites com os respectivos links -->
-        <div class="site" onclick="searchSite('supertela.vg')">
-            <a href="https://supertela.vg" target="_blank"><img src="https://supertela.vg/wp-content/uploads/favicon-1.png" alt="supertela.vg"></a>
-        </div>
-        <div class="site" onclick="searchSite('mflix.plus')">
-            <a href="https://mflix.plus" target="_blank"><img src="https://mflix.plus/wp-content/uploads/2024/06/mflixlogo-1.png" alt="mflix.plus"></a>
-        </div>
-        <div class="site" onclick="searchSite('megaflix.sh')">
-            <a href="https://megaflix.sh" target="_blank"><img src="https://megaflix.sh/wp-content/uploads/2020/03/favicon-megaflix.png" alt="megaflix.sh"></a>
-        </div>
-        <div class="site" onclick="searchSite('obaflix.click')">
-            <a href="https://obaflix.click" target="_blank"><img src="https://i.imgur.com/VkjF3Nz.png" alt="obaflix.click"></a>
-        </div>
-        <div class="site" onclick="searchSite('hyper.hypermyapp.site')">
-            <a href="https://hyper.hypermyapp.site" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3600/3600921.png" alt="hyper.hypermyapp.site"></a>
-        </div>
-        <div class="site" onclick="searchSite('obaflix.to')">
-            <a href="https://obaflix.to" target="_blank"><img src="https://obaflix.to/wp-content/uploads/2024/03/cropped-unnamed-180x180.webp" alt="obaflix.to"></a>
-        </div>
-        <!-- Adicione os demais ícones aqui -->
-        <div class="site" onclick="searchSite('topflix.sh')">
-            <a href="https://topflix.sh" target="_blank"><img src="https://topflix.sh/images/favicon.ico" alt="topflix.sh"></a>
-        </div>
-        <div class="site" onclick="searchSite('furiaflix.cc')">
-            <a href="https://furiaflix.cc" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/6819/6819113.png" alt="furiaflix.cc"></a>
-        </div>
-        <div class="site" onclick="searchSite('pobreflix.net.br')">
-            <a href="https://pobreflix.net.br" target="_blank"><img src="https://pobreflix50.net/wp-content/uploads/2024/02/favicon-32x32-1.png" alt="pobreflix.net.br"></a>
+<div class="container">
+<!-- Adicione os ícones dos sites com os respectivos links -->
+<div class="site" onclick="searchSite('supertela.vg')">
+<a href="https://supertela.vg" target="_blank"><img src="https://supertela.vg/wp-content/uploads/favicon-1.png" alt="supertela.vg"></a>
+</div>
+<div class="site" onclick="searchSite('mflix.plus')">
+<a href="https://mflix.plus" target="_blank"><img src="https://mflix.plus/wp-content/uploads/2024/06/mflixlogo-1.png" alt="mflix.plus"></a>
+</div>
+<div class="site" onclick="searchSite('megaflix.sh')">
+<a href="https://megaflix.sh" target="_blank"><img src="https://megaflix.sh/wp-content/uploads/2020/03/favicon-megaflix.png" alt="megaflix.sh"></a>
+</div>
+<div class="site" onclick="searchSite('obaflix.click')">
+<a href="https://obaflix.click" target="_blank"><img src="https://i.imgur.com/VkjF3Nz.png" alt="obaflix.click"></a>
+</div>
+<!-- <div class="site" onclick="searchSite('hyper.hypermyapp.site')">
+<a href="https://hyper.hypermyapp.site" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3600/3600921.png" alt="hyper.hypermyapp.site"></a> -->        
+<div class="site" onclick="searchSite('obaflix.to')">
+<a href="https://obaflix.to" target="_blank"><img src="https://obaflix.to/wp-content/uploads/2024/03/cropped-unnamed-180x180.webp" alt="obaflix.to"></a>
+</div>
+<div class="site" onclick="searchSite('topflix.sh')"> <a href="https://topflix.sh" target="_blank"><img src="https://topflix.sh/images/logo1.png" alt="topflix.sh"></a>
+ </div>
+<div class="site" onclick="searchSite('furiaflix.cc')">
+<a href="https://furiaflix.cc" target="_blank"><img src="https://furiaflix.cc/wp-content/uploads/logo.png" alt="furiaflix.cc"></a>
+</div>
+<div class="site" onclick="searchSite('pobreflix.net.br')">
+<a href="https://pobreflix.net.br" target="_blank"><img src="https://pobreflix50.net/wp-content/uploads/2024/02/favicon-32x32-1.png" alt="pobreflix.net.br"></a>
 </div>
 <div class="site" onclick="searchSite('visioncine.love')">
 <a href="https://visioncine.love" target="_blank"><img src="https://visioncine.love/wp-content/uploads/2024/02/icon.png" alt="visioncine.love"></a>
@@ -153,7 +189,7 @@
 <a href="https://megaflix.click" target="_blank"><img src="https://i.imgur.com/UzgvLXC.png" alt="megaflix.click"></a>
 </div>
 <div class="site" onclick="searchSite('youcine.vision')">
-<a href="https://youcine.vision" target="_blank"><img src="https://youcine.vision/wp-content/uploads/2024/05/favicon.ico" alt="youcine.vision"></a>
+<a href="https://youcine.vision" target="_blank"><img src="https://youcine.vision/wp-content/uploads/2024/03/cropped-android-chrome-512x512-1.png" alt="youcine.vision"></a>
 </div>
 <div class="site" onclick="searchSite('startflix.vip')">
 <a href="https://startflix.vip" target="_blank"><img src="https://startflix.vip/wp-content/uploads/2022/11/cropped-unnamed-32x32.png" alt="startflix.vip"></a>
@@ -165,13 +201,34 @@
 <a href="https://redecanais.dev" target="_blank"><img src="https://redecanais.mov/templates/echo/img/favicon.ico" alt="redecanais.dev"></a>
 </div>
 </div>
-<!-- Mensagem de atualização -->
-<div class="update-message">
-    <p>*¹ atualize a página, se o ícone do site não aparecer, o mesmo pode estar em manutenção ou offline :(</p>
-    <p style="display: block;"></p>
-	<p>*² os sites contém propagandas :(</p>
+<hr>
+<!-- Adicione os ícones dos sites com os respectivos links -->
+<div class="container">
+<div class="site">
+<a href="https://redecanaistv.dev" target="_blank"><img src="https://redecanaistv.dev/assets/img/rc-custom-logo.png" alt="redecanaistv.dev"></a>
+</div>
+<div class="site">
+<a href="https://futemax.pm" target="_blank"><img src="https://futemax.pm/img/logo2.png" alt="futemax.pm"></a>
+</div>
+<div class="site">
+<a href="https://futebolaovivo.app" target="_blank"><img src="https://web.archive.org/web/20210830174037im_/https://futeboltotal.net.br/wp-content/uploads/2021/06/Sem-Titulo-2-e1623944690809.png.webp" alt="futebolaovivo.app"></a>
+</div>
+<div class="site">
+<a href="https://futebolhd.org" target="_blank"><img src="https://futebolhd.org/wp-content/uploads/2023/08/cropped-iscone-180x180.png" alt="futebolhd.org"></a>
+</div>
 </div>
 
+<!-- Mensagem de atualização -->
+<div class="update-message">
+    <p>¹ atualize a página, se o ícone do site não aparecer, o mesmo pode estar em manutenção ou offline :(</p>
+    <p style="display: block;"></p>
+	<p>² os sites contém propagandas :(</p>
+</div>
+  <div class="footer-info">
+        <p style="color: gray; font-size: 10px;">
+            <a href="https://t.me/WARCN3T" id="telegramLink" target="_blank" style="color: gray;">byWARC</a>
+        </p>
+    </div>
 <script>
     document.getElementById('searchForm').addEventListener('submit', function(event) {
         event.preventDefault();  // Previne o comportamento padrão do formulário de recarregar a página
@@ -186,7 +243,7 @@
             'mflix.plus',
             'megaflix.sh',
             'obaflix.click',
-            'hyper.hypermyapp.site',
+        // 'hyper.hypermyapp.site',
             'obaflix.to',
             'topflix.sh',
             'furiaflix.cc',
@@ -210,6 +267,12 @@
         // Exibe os resultados de busca na mesma página
         sites.forEach(site => {
             const url = `https://www.google.com/search?q=${encodeURIComponent(query + ' site:' + site)}`;  // Constrói a URL de busca no Google para cada site
+            const resultFromSite = document.createElement('div');  // Cria um elemento para exibir os resultados do site atual
+            resultFromSite.innerHTML = `Resultado da busca no site: <a href="${url}" target="_blank">${site}</a>: <br>`;  // Cria um link para a busca no Google
+            resultFromSite.classList.add('site-results');  // Adiciona uma classe para estilização
+            resultsDiv.appendChild(resultFromSite);  // Adiciona o elemento à div de resultados
+
+            // Realiza uma requisição fetch para buscar os resultados do site atual
             fetch(`https://cors-anywhere.herokuapp.com/${url}`)
                 .then(response => response.text())
                 .then(data => {
@@ -218,38 +281,50 @@
                     const doc = parser.parseFromString(data, 'text/html');
                     const links = [...doc.querySelectorAll('a')].map(anchor => anchor.href).filter(href => href.includes(site));
 
-                    // Exibe os resultados na página
-                    const resultsFromSite = document.createElement('p');
-                    resultsFromSite.innerHTML = `Resultado da busca no site: <a href="${url}" target="_blank">${site}</a>`;
-                    resultsDiv.appendChild(resultsFromSite);
-
-                    if (links.length > 0) {
-                        const linksList = document.createElement('ul');
-                        links.forEach(link => {
-                            const listItem = document.createElement('li');
-                            const anchor = document.createElement('a');
-                            anchor.href = link;
-                            anchor.textContent = link;
-                            listItem.appendChild(anchor);
-                            linksList.appendChild(listItem);
-                        });
-                        resultsDiv.appendChild(linksList);
-                    }
+                    // Exibe os links encontrados
+                    links.forEach(link => {
+                        const linkElement = document.createElement('a');
+                        linkElement.href = link;
+                        linkElement.textContent = link;
+                        linkElement.target = '_blank';  // Abre o link em uma nova aba
+                        resultFromSite.appendChild(linkElement);  // Adiciona o link ao elemento de resultados do site atual
+                        resultFromSite.appendChild(document.createElement('br'));  // Adiciona uma quebra de linha
+                    });
                 })
                 .catch(error => {
                     console.error('Erro ao buscar resultados:', error);  // Exibe o erro no console se houver
                     // Exibe uma mensagem de erro
                     const errorMessage = document.createElement('p');
                     errorMessage.textContent = `Erro ao buscar resultados em ${site}.`;
-                    resultsDiv.appendChild(errorMessage);
+                    resultFromSite.appendChild(errorMessage);  // Adiciona a mensagem de erro ao elemento de resultados do site atual
                 });
         });
     }
 </script>
-<!-- Informação adicional -->
-<div class="footer-info">
-    <p style="color: gray; font-size: 10px;"><a href="https://t.me/WARCN3T" target="_blank" style="color: gray;">byWARC</a></p>
-</div>
-</div>
+<script>
+    document.querySelector('.footer-info a').addEventListener('click', function(event) {
+        event.preventDefault();
+        
+        // Copia o usuário do Telegram para a área de transferência
+        const telegramUser = "@WARCN3T";
+        navigator.clipboard.writeText(telegramUser).then(() => {
+            // Mostra o pop-up
+            const popup = document.createElement('div');
+            popup.className = 'popup';
+            popup.textContent = 'Usuário @WARCN3T copiado, cole no telegram, Redirecionando...';
+            document.body.appendChild(popup);
+            popup.style.display = 'block';
+            
+            // Remove o pop-up após 3 segundos e abre o link do Telegram
+            setTimeout(() => {
+                popup.style.display = 'none';
+                window.open('https://t.me/WARCN3T', '_blank');
+                document.body.removeChild(popup);
+            }, 3000);
+        }).catch(err => {
+            console.error('Erro ao copiar para a área de transferência: ', err);
+        });
+    });
+</script>
 </body>
 </html>

@@ -2,23 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0;url=https://wtv123.pages.dev">
     <script>
-        // Verifica se a página foi carregada novamente após o redirecionamento meta refresh
-        function checkRedirect() {
-            if (document.cookie.indexOf("redirected=true") === -1) {
-                // Define o cookie para indicar que o redirecionamento ocorreu
-                document.cookie = "redirected=true";
-                // Redirecionamento usando JavaScript após 5 segundos como fallback
-                setTimeout(function() {
-                    window.location.href = "https://warc0cara.github.io/home.html";
-                }, 5000); // 5000 milissegundos = 5 segundos
-            } else {
-                // Limpa o cookie após o redirecionamento
-                document.cookie = "redirected=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        // Função para definir um cookie
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
             }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
         }
-        window.onload = checkRedirect;
+
+        // Função para obter um cookie
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        // Verifica se o redirecionamento já ocorreu
+        var redirected = getCookie("redirected");
+
+        if (!redirected) {
+            // Define o cookie para marcar que o redirecionamento ocorreu
+            setCookie("redirected", "true", 1); // O cookie expira em 1 dia
+
+            // Redireciona para o primeiro URL
+            window.location.href = "https://wtv123.pages.dev";
+        }
+
+        // Fallback para redirecionamento após 5 segundos, se necessário
+        setTimeout(function() {
+            if (!redirected) {
+                window.location.href = "https://warc0cara.github.io/home.html";
+            }
+        }, 5000);
     </script>
     <style>
         /* Oculta todo o conteúdo da página */
@@ -28,6 +52,5 @@
     </style>
 </head>
 <body>
-    <!-- Conteúdo vazio -->
 </body>
 </html>

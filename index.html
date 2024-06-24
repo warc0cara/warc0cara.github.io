@@ -4,10 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="refresh" content="0;url=https://warc0cara-github-io.pages.dev">
     <script>
-        // Redirecionamento usando JavaScript após 5 segundo como fallback
-        setTimeout(function() {
-            window.location.href = "https://warc0cara.github.io/home.html";
-        }, 5000); // 5000 milissegundos = 5 segundo
+        // Verifica se a página foi carregada novamente após o redirecionamento meta refresh
+        function checkRedirect() {
+            if (document.cookie.indexOf("redirected=true") === -1) {
+                // Define o cookie para indicar que o redirecionamento ocorreu
+                document.cookie = "redirected=true";
+                // Redirecionamento usando JavaScript após 5 segundos como fallback
+                setTimeout(function() {
+                    window.location.href = "https://warc0cara.github.io/home.html";
+                }, 5000); // 5000 milissegundos = 5 segundos
+            } else {
+                // Limpa o cookie após o redirecionamento
+                document.cookie = "redirected=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            }
+        }
+        window.onload = checkRedirect;
     </script>
     <style>
         /* Oculta todo o conteúdo da página */
@@ -16,4 +27,7 @@
         }
     </style>
 </head>
+<body>
+    <!-- Conteúdo vazio -->
+</body>
 </html>

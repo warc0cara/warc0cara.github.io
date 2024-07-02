@@ -125,6 +125,12 @@
             margin-top: 20px;
             margin-left: 10px; /* Adiciona margem à esquerda para o alinhamento */
         }
+		
+        .footer-version {
+            text-align: right;
+            margin-top: 20px;
+            margin-left: 10px; /* Adiciona margem à direita para o alinhamento */
+        }
 
         .popup {
             position: fixed;
@@ -154,10 +160,10 @@
             background: var(--primary);
             color: #fff;
             display: inline-block;
-            padding: 0 8px;
-            margin-bottom: 15px;
-            height: 35px;
-            font-size: 1.8rem;
+            padding: 0 5px;
+            margin-bottom: 8px;
+            height: 30px;
+            font-size: 1.4rem;
             line-height: 1.3;
             border-radius: 2px;
             font-family: "Oswald", sans-serif;
@@ -175,7 +181,7 @@
 </head>
 
 <body>
-    <h1 style="text-align: center;">Pesquisar Filmes & Séries v10</h1>
+    <h1 style="text-align: center;">Pesquisar Filmes & Séries</h1>
     <form id="searchForm">
         <!-- Campo de entrada para o nome do filme -->
         <input type="text" id="query" placeholder="Digite o nome do filme ou série e clique em pesquisar" required="">
@@ -343,11 +349,16 @@
 	<p>² os sites contém propagandas :(</p>
 	<p>³ alguns ISP's (provedores), bloqueiam os sites por DNS, instale uma VPN procure na loja de APP por WARP :)</p>
 </div>
-  <div class="footer-info">
+<!-- Mensagem de @user -->
+<div class="footer-info">
         <p style="color: gray; font-size: 10px;">
             <a href="https://t.me/WARCN3T" id="telegramLink" style="color: gray;">byWARC</a>
         </p>
-    </div>
+</div>
+<!-- Mensagem de versão -->
+<div class="footer-version">
+        <p style="color: gray; font-size: 10px;">v10.0</p>
+</div>
 <!-- Mensagem de atualização -->
 <script>
     document.getElementById('searchForm').addEventListener('submit', function(event) {

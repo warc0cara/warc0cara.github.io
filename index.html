@@ -1,468 +1,57 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-    <link rel="icon" href="https://wtv123.pages.dev/img/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pesquisar Filmes & Séries byW4RC</title>
-    <meta name="description" content="Pesquise e encontre filmes e séries rapidamente através de vários sites de streaming. Explore as melhores opções e descubra novos conteúdos para assistir.">
-    <meta name="keywords" content="filmes, séries, streaming, pesquisa, assistir online, supertela, megafilmes, obaflix">
-    <link rel="preload" href="https://supertela.vg/wp-content/uploads/favicon-1.png" as="image">
-    <!-- Restante do código -->
-</head>
-	
- <style>
-        body { 
-            font-family: Arial, sans-serif;
-            background-color: black; /* Define a cor de fundo como preto */
-            /* background-image: url('https://wtv123.pages.dev/img/fundo.jpg'); */
-            background-size: cover;
-            background-repeat: no-repeat;
-            color: white;
-            margin: 0;
-            padding: 0;
-            height: 100vh; /* Define a altura do corpo como 100% da altura da tela */
-            display: flex;
-            flex-direction: column;
+    <title>Redirecionamento Único</title>
+    <script>
+        // Função para definir um cookie
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
         }
 
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            margin-top: 10px;
+        // Função para obter um cookie
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
         }
 
-        .icon {
-            width: 50px;
-            height: 50px;
-            margin: 10px; /* Aumentei a margem para melhor visualização */
-            cursor: pointer;
-            transition: transform 0.3s;
-            overflow: hidden; /* Garante que conteúdo extra seja escondido */
+        // Verifica se o redirecionamento já ocorreu
+        var redirected = getCookie("redirected");
+
+        if (!redirected) {
+            // Define o cookie para marcar que o redirecionamento ocorreu
+            setCookie("redirected", "true", 1); // O cookie expira em 1 dia
+
+            // Redireciona para o primeiro URL
+            window.location.href = "https://wtv123.pages.dev";
         }
 
-        .icon:hover {
-            transform: scale(1.5); /* Aumenta em 50% ao passar o mouse */
-        }
-
-        .icon img {
-            width: 100%;
-            height: 100%;
-            display: block; /* Remove espaço extra abaixo da imagem */
-        }
-
-        .logo {
-            width: 130px; /* Ajusta o tamanho da div para acomodar a imagem */
-            overflow: hidden; /* Garante que conteúdo extra seja escondido */
-            transition: transform 0.3s; /* Adiciona transição suave ao efeito de zoom */
-            margin: 10px; /* Aumentei a margem para melhor visualização */
-        }
-
-        .logo:hover {
-            transform: scale(1.2); /* Aumenta em 20% ao passar o mouse */
-        }
-
-        .logo img {
-            width: 100%; /* Ajusta a largura da imagem para ocupar toda a div */
-            height: 100%; /* Ajusta a altura da imagem para ocupar toda a div */
-            display: block; /* Remove espaço extra abaixo da imagem */
-        }
-
-        .results { 
-            margin-top: 10px;
-        }
-
-        #searchForm {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #query {
-            width: 320px; /* Ajuste a largura conforme necessário */
-            margin-bottom: 10px;
-            padding: 5px;
-        }
-
-        #searchForm button {
-            background-color: red; /* Botão vermelho */
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        #searchForm button:hover {
-            background-color: black; /* Ao passar o mouse, fica preto */
-        }
-
-        a {
-            color: red;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        a:hover {
-            color: yellow;
-        }
-
-        a:visited {
-            color: yellow; /* Altera a cor dos links visitados para amarelo */
-        }
-
-        .update-message {
-            text-align: center;
-            color: yellow;
-            margin-top: 20px;
-            font-size: 10px; /* Ajuste o tamanho da fonte conforme desejado */
-        }
-
-        .footer-info {
-            text-align: left;
-            margin-top: 20px;
-            margin-left: 10px; /* Adiciona margem à esquerda para o alinhamento */
-        }
-		
-        .footer-version {
-            text-align: right;
-            margin-top: 20px;
-            margin-left: 10px; /* Adiciona margem à direita para o alinhamento */
-        }
-
-        .popup {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
+        // Fallback para redirecionamento após 5 segundos, se necessário
+        setTimeout(function() {
+            if (!redirected) {
+                window.location.href = "https://warc0cara.github.io/home.html";
+            }
+        }, 5000);
+    </script>
+    <style>
+        /* Oculta todo o conteúdo da página */
+        html, body {
             display: none;
-            z-index: 1000;
-        }
-
-        hr {
-            border: none;
-            border-top: 1.5px solid gray; /* Adiciona uma linha horizontal cinza */
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-
-        :root {
-            --primary: #00acc1 !important;
-        }
-
-        .hd50 {
-            background: var(--primary);
-            color: #fff;
-            display: inline-block;
-            padding: 0 5px;
-            margin-bottom: 8px;
-            height: 30px;
-            font-size: 1.4rem;
-            line-height: 1.3;
-            border-radius: 2px;
-            font-family: "Oswald", sans-serif;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: -1px;
-        }
-
-        .hd50 a {
-            color: inherit; /* Garante que o link herde a cor branca do texto */
-            text-decoration: none; /* Remove o sublinhado do link */
         }
     </style>
-
 </head>
-
 <body>
-    <h1 style="text-align: center;">Pesquisar Filmes & Séries</h1>
-    <form id="searchForm">
-        <!-- Campo de entrada para o nome do filme -->
-        <input type="text" id="query" placeholder="Digite o nome do filme ou série e clique em pesquisar" required="">
-        <!-- Botão para iniciar a busca -->
-        <button type="submit">Pesquisar</button>
-    </form>
-   
-    <!-- Div para exibir os resultados -->
-    <div class="results" id="results"></div>	
-</body>
-<script>
-    // Lista de URLs das img de fundo disponíveis
-    const backgrounds = [
-        'https://wtv123.pages.dev/img/fundo.jpg',
-        'https://wtv123.pages.dev/img/fundo_1.jpg',
-        'https://wtv123.pages.dev/img/fundo_10.jpg',
-        'https://wtv123.pages.dev/img/fundo_11.jpg',
-        'https://wtv123.pages.dev/img/fundo_12.jpg',
-        'https://wtv123.pages.dev/img/fundo_13.jpg',
-        'https://wtv123.pages.dev/img/fundo_2.jpg',
-        'https://wtv123.pages.dev/img/fundo_3.jpg',
-        'https://wtv123.pages.dev/img/fundo_7.jpg',
-        'https://wtv123.pages.dev/img/fundo_8.jpg',
-        'https://wtv123.pages.dev/img/fundo_9.jpg'
-        // Adicione mais URLs de img de fundo conforme necessário
-    ];
-
-    // Seleciona aleatoriamente uma URL de imagem de fundo da lista
-    const randomBackground = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-
-    // Aplica a imagem de fundo selecionada ao estilo CSS do corpo da página
-    document.body.style.backgroundImage = `url('${randomBackground}')`;
-</script>
-	
-<div class="container">
-<!-- Adicione os ícones dos sites PARA BUSCA com os respectivos links -->
-<div class="icon">
-<a href="https://supertela.vg"><img src="https://supertela.vg/wp-content/uploads/favicon-1.png" alt="supertela.vg" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://megafilmesgratishd.org"><img src="https://megafilmesgratishd.org/wp-content/uploads/2024/05/logo-mf.png" alt="megafilmesgratishd.org" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://mflix.plus"><img src="https://mflix.plus/wp-content/uploads/2024/06/mflixlogo-1.png" alt="mflix.plus" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://megafilmeshd50.ms"><img src="https://megafilmeshd50.ms/wp-content/uploads/2023/12/favicon.png" alt="megafilmeshd50.ms" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://megaflix.sh"><img src="https://megaflix.sh/wp-content/uploads/2020/03/favicon-megaflix.png" alt="megaflix.sh" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://obaflix.click"><img src="https://i.imgur.com/VkjF3Nz.png" alt="obaflix.click" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://obaflix.to"><img src="https://obaflix.to/wp-content/uploads/2024/03/cropped-unnamed-180x180.webp" alt="obaflix.to" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://visioncine.love"><img src="https://visioncine.love/wp-content/uploads/2024/02/icon.png" alt="visioncine.love" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://www.megafilmeshds.vip"><img src="https://www.megafilmeshds.vip/wp-content/uploads/2021/08/icon.png" alt="megafilmeshds.vip" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://comandoflix.pro"><img src="https://comandoflix.pro/wp-content/uploads/2022/04/favFS.png" alt="comandoflix.pro" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://filmesmega.online"><img src="https://filmesmega.online/wp-content/uploads/2019/09/filmesmega-favicon-3.png" alt="filmesmega.online" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://overflix.mov"><img src="https://overflix.mov/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_fav.ico" alt="overflix.mov" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://vizerhd.org"><img src="https://vizerhd.org/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_favicon.ico" alt="vizerhd.org" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://pobreflixhd.red"><img src="https://pobreflixhd.mov/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_favicon.ico" alt="pobreflixhd.red" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://megaflix.click"><img src="https://i.imgur.com/UzgvLXC.png" alt="megaflix.click" loading="lazy"></a>
-</div>
-<!--<div class="icon">
-<a href="https://pobreflix.net.br"><img src="https://pobreflix50.net/wp-content/uploads/2024/02/favicon-32x32-1.png" alt="pobreflix.net.br" loading="lazy"></a>
-</div>-->
-<div class="icon">
-<a href="https://youcine.vision"><img src="https://youcine.vision/wp-content/uploads/2024/03/cropped-android-chrome-512x512-1.png" alt="youcine.vision" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://startflix.vip"><img src="https://startflix.vip/wp-content/uploads/2022/11/cropped-unnamed-32x32.png" alt="startflix.vip" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://redecanais.dev"><img src="https://redecanais.mov/templates/echo/img/favicon.ico" alt="redecanais.dev" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://filmesonlinesgratis.org"><img src="https://filmesonlinesgratis.org/img/favicon.png" alt="filmesonlinesgratis.org" loading="lazy"></a>
-</div>
-<div class="logo">
-<a href="https://topflix.sh"><img src="https://topflix.sh/images/logo1.png" alt="topflix.sh" loading="lazy"></a>
- </div>
-<br> <!-- Esta tag <br> cria uma quebra de linha -->
-
-<!-- Adicione os ícones dos sites PARA BUSCA com os respectivos links -->
-
-<!-- Adicione os LOGO dos sites PARA BUSCA com os respectivos links -->
-<div class="logo">
-<a href="https://pobreflix.xyz"><img src="https://pobreflix.xyz/assets/movix-logo-33b8170e.png" alt="pobreflix.xyz" loading="lazy"></a>
-</div>
-<div class="logo">
-<a href="https://appzin.smartflix.app"><img src="https://appzin.smartflix.app/wp-content/uploads/2024/06/LOGO_SMA3-1.png" alt="appzin.smartflix.app" loading="lazy" loading="lazy"></a>
-</div>
-<div class="logo">
-<a href="https://furiaflix.cc"><img src="https://furiaflix.cc/wp-content/uploads/logo.png" alt="furiaflix.cc" loading="lazy"></a>
-</div>
-<div class="logo">
-<a href="https://redecanais.in"><img src="https://redecanais.in/wp-content/uploads/2024/04/redecanais-logo.png" alt="redecanais.in" loading="lazy"></a>
-</div>
-<div class="hd50">
-<a href="https://cineflixhd50.com">cineflixhd50</a>
-</div>
-</div>
-<!-- Adicione os LOGO dos sites PARA BUSCA com os respectivos links -->
-<div>
-<hr> <!-- Adicione esta linha -->
-<!-- Adicione os ícones dos sites EXTRAS com os respectivos links -->
-<div class="container">
-<div class="icon">
-<a href="https://redecanaistv.dev"><img src="https://redecanaistv.dev/assets/img/rc-custom-logo.png" alt="redecanaistv.dev" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://futemax.pm"><img src="https://futemax.pm/img/logo2.png" alt="futemax.pm" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://futebolaovivo.app"><img src="https://web.archive.org/web/20210830174037im_/https://futeboltotal.net.br/wp-content/uploads/2021/06/Sem-Titulo-2-e1623944690809.png.webp" alt="futebolaovivo.app" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://futebolhd.org"><img src="https://futebolhd.org/wp-content/uploads/2023/08/cropped-iscone-180x180.png" alt="futebolhd.org" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://tv0800.top"><img src="https://tv0800.top/wp-content/uploads/2023/07/coollogo-com-17147371.png" alt="tv0800.top" loading="lazy"></a>
-</div>
-<div class="icon">
-<a href="https://piratetv.pro"><img id="favicon-piratetv" src="https://piratetv.pro/wp-content/themes/Pirate%20TV%20PRO%20theme/assets/images/favicon.png" alt="piratetv.pro" loading="lazy"></a>
-</div>
-<br> <!-- Esta tag <br> cria uma quebra de linha -->
-<div class="logo">
-<a href="https://canaisplay.la"><img id="favicon-piratetv" src="https://canaisplay.la/img/logo-black.svg" alt="canaisplay.la" loading="lazy"></a>
-</div>
-</div>
-<!-- Adicione os ícones dos sites EXTRAS com os respectivos links -->
-    <script>
-        // Função para aplicar um filtro CSS ao favicon específico
-        function changeFaviconColor(id, filter) {
-            const favicon = document.getElementById(id);
-            favicon.style.filter = filter;
-        }
-
-        // Exemplo de uso: inverter as cores do favicon
-        changeFaviconColor('favicon-piratetv', 'invert(1)');
-    </script>
-	
-<!-- Mensagem de atualização -->
-<div class="update-message">
-    <p>¹ se o ícone do site não aparecer, o mesmo pode estar em manutenção ou offline :(</p>
-    <p style="display: block;"></p>
-	<p>² os sites contém propagandas :(</p>
-	<p>³ alguns ISP's (provedores), bloqueiam os sites por DNS, instale uma VPN procure na loja de APP por WARP :)</p>
-</div>
-<!-- Mensagem de @user -->
-<div class="footer-info">
-        <p style="color: gray; font-size: 10px;">
-            <a href="https://t.me/WARCN3T" id="telegramLink" style="color: gray;">byWARC</a>
-        </p>
-</div>
-<!-- Mensagem de versão -->
-<div class="footer-version">
-        <p style="color: gray; font-size: 10px;">v10.0</p>
-</div>
-<!-- Mensagem de atualização -->
-<script>
-    document.getElementById('searchForm').addEventListener('submit', function(event) {
-        event.preventDefault();  // Previne o comportamento padrão do formulário de recarregar a página
-        const query = document.getElementById('query').value;  // Obtém o valor do campo de texto
-        searchMovies(query);  // Chama a função searchMovies passando o termo de busca
-    });
-
-    function searchMovies(query) {
-        // Lista de sites nos quais faremos a busca
-        const sites = [
-            'supertela.vg',
-			'megafilmesgratishd.org',
-			'cineflixhd50.com',
-			'pobreflix.xyz',
-			'megafilmeshd50.ms',
-			'filmesonlinesgratis.org',
-            'mflix.plus',
-            'megaflix.sh',
-            'obaflix.click',
-          //'appzin.smartflix.app',
-            'obaflix.to',
-            'topflix.sh',
-            'furiaflix.cc',
-          //'pobreflix.net.br',
-            'visioncine.love',
-            'comandoflix.pro',
-			'megafilmeshds.vip',
-            'filmesmega.online',
-            'overflix.mov',
-            'vizerhd.org',
-            'pobreflixhd.red',
-            'megaflix.click',
-            'youcine.vision',
-            'startflix.vip',
-            'redecanais.in',
-            'redecanais.dev'
-        ];
-
-        const resultsDiv = document.getElementById('results');  // Obtém a div onde os resultados serão exibidos
-        resultsDiv.innerHTML = '';  // Limpa os resultados anteriores
-
-        // Exibe os resultados de busca na mesma página
-        sites.forEach(site => {
-            const url = `https://www.google.com/search?q=${encodeURIComponent(query + ' site:' + site)}`;  // Constrói a URL de busca no Google para cada site
-            const resultFromSite = document.createElement('div');  // Cria um elemento para exibir os resultados do site atual
-            resultFromSite.innerHTML = `Resultado da busca no site: <a href="${url}">${site}</a> <br>`;  // Cria um link para a busca no Google
-            resultFromSite.classList.add('site-results');  // Adiciona uma classe para estilização
-            resultsDiv.appendChild(resultFromSite);  // Adiciona o elemento à div de resultados
-
-            // Realiza uma requisição fetch para buscar os resultados do site atual
-            fetch(`https://cors-anywhere.herokuapp.com/${url}`)
-                .then(response => response.text())
-                .then(data => {
-                    // Cria um parser para analisar o HTML da resposta
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(data, 'text/html');
-                    const links = [...doc.querySelectorAll('a')].map(anchor => anchor.href).filter(href => href.includes(site));
-
-                    // Exibe os links encontrados
-                    links.forEach(link => {
-                        const linkElement = document.createElement('a');
-                        linkElement.href = link;
-                        linkElement.textContent = link;
-                       // linkElement.target = '_blank';  // Abre o link em uma nova aba
-                        resultFromSite.appendChild(linkElement);  // Adiciona o link ao elemento de resultados do site atual
-                        resultFromSite.appendChild(document.createElement('br'));  // Adiciona uma quebra de linha
-                    });
-                })
-                .catch(error => {
-                    console.error('Erro ao buscar resultados:', error);  // Exibe o erro no console se houver
-                    // Exibe uma mensagem de erro
-                    const errorMessage = document.createElement('p');
-                    errorMessage.textContent = `Erro ao buscar resultados em ${site}.`;
-                    resultFromSite.appendChild(errorMessage);  // Adiciona a mensagem de erro ao elemento de resultados do site atual
-                });
-        });
-    }
-</script>
-<script>
-    document.querySelector('.footer-info a').addEventListener('click', function(event) {
-        event.preventDefault();
-        
-        // Copia o usuário do Telegram para a área de transferência
-        const telegramUser = "@WARCN3T";
-        navigator.clipboard.writeText(telegramUser).then(() => {
-            // Mostra o pop-up
-            const popup = document.createElement('div');
-            popup.className = 'popup';
-            popup.textContent = 'Usuário @WARCN3T copiado, cole no telegram, Redirecionando...';
-            document.body.appendChild(popup);
-            popup.style.display = 'block';
-            
-            // Remove o pop-up após 3 segundos e abre o link do Telegram
-            setTimeout(() => {
-                popup.style.display = 'none';
-                window.open('https://t.me/WARCN3T', '_blank');
-                document.body.removeChild(popup);
-            }, 3000);
-        }).catch(err => {
-            console.error('Erro ao copiar para a área de transferência: ', err);
-        });
-    });
-</script>
-<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9a827c3055ea495b8837a9be00ff7bb7"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

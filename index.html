@@ -2,56 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Redirecionamento Único</title>
-    <script>
-        // Função para definir um cookie
-        function setCookie(name, value, days) {
-            var expires = "";
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toUTCString();
-            }
-            document.cookie = name + "=" + (value || "") + expires + "; path=/";
-        }
-
-        // Função para obter um cookie
-        function getCookie(name) {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
-
-        // Verifica se o redirecionamento já ocorreu
-        var redirected = getCookie("redirected");
-
-        if (!redirected) {
-            // Define o cookie para marcar que o redirecionamento ocorreu
-            setCookie("redirected", "true", 1); // O cookie expira em 1 dia
-
-            // Redireciona para o primeiro URL
-            window.location.href = "https://wtv123.pages.dev";
-        }
-
-        // Fallback para redirecionamento após 5 segundos, se necessário
-        setTimeout(function() {
-            if (!redirected) {
-                window.location.href = "https://warc0cara.github.io/home.html";
-            }
-        }, 5000);
-    </script>
-    <style>
-        /* Oculta todo o conteúdo da página */
-        html, body {
-            display: none;
-        }
-    </style>
+    <meta http-equiv="refresh" content="0; url=https://wtv123.pages.dev">
 </head>
-<body>
-</body>
 </html>

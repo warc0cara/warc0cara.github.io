@@ -826,6 +826,10 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); disp
 
       <button class="btn-icon" onclick="toggleTheme()" title="Tema">🌙</button>
 
+      <button class="btn-icon" onclick="adjustFont(-10)" title="Diminuir fonte">A-</button>
+
+      <button class="btn-icon" onclick="adjustFont(10)" title="Aumentar fonte">A+</button>
+
       <button class="btn-icon" onclick="resetSession()" title="Resetar sessão">🔄</button>
 
     </div>
@@ -1254,6 +1258,18 @@ function toggleTheme() {
   document.documentElement.setAttribute('data-theme', th === 'dark' ? 'light' : 'dark');
 
 }
+
+let fontScale = parseInt(localStorage.getItem('fontScale') || '100');
+
+function adjustFont(delta) {
+  fontScale = Math.max(70, Math.min(150, fontScale + delta));
+  document.documentElement.style.fontSize = fontScale + '%';
+  localStorage.setItem('fontScale', fontScale);
+}
+
+(function() {
+  if (fontScale !== 100) document.documentElement.style.fontSize = fontScale + '%';
+})();
 
 
 

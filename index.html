@@ -411,6 +411,8 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); disp
     </div>
     <div class="topbar-actions">
       <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
+      <button class="btn-icon" onclick="changeFont(-1)" title="Diminuir fonte">A-</button>
+      <button class="btn-icon" onclick="changeFont(1)" title="Aumentar fonte">A+</button>
       <button class="btn-icon" onclick="toggleTheme()" title="Tema">🌙</button>
       <button class="btn-icon" onclick="resetSession()" title="Resetar sessão">🔄</button>
     </div>
@@ -626,6 +628,15 @@ function go(tabId) {
 function toggleTheme() {
   const th = document.documentElement.getAttribute('data-theme');
   document.documentElement.setAttribute('data-theme', th === 'dark' ? 'light' : 'dark');
+}
+
+let currentFontSize = parseInt(localStorage.getItem('dp2026_fontsize') || '100');
+document.documentElement.style.fontSize = currentFontSize + '%';
+
+function changeFont(delta) {
+  currentFontSize = Math.max(70, Math.min(150, currentFontSize + delta * 10));
+  document.documentElement.style.fontSize = currentFontSize + '%';
+  localStorage.setItem('dp2026_fontsize', currentFontSize);
 }
 
 function toggleSidebar() {

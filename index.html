@@ -132,7 +132,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); disp
 
   background: linear-gradient(90deg, rgba(99,102,241,.2), rgba(168,85,247,.15));
 
-  padding: 12px 18px; display: flex; align-items: center; gap: 10px;
+  padding: 12px 18px; display: flex; align-items: center; gap: 10px; justify-content: space-between;
 
   border-bottom: 1px solid var(--accent);
 
@@ -141,11 +141,9 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); disp
 .ai-panel-header span { font-weight: 700; font-size: .88rem; color: var(--accent); }
 
 .ai-badge {
-
-  background: var(--accent); color: #fff; font-size: .68rem;
-
-  font-weight: 800; padding: 2px 7px; border-radius: 4px; letter-spacing: .04em;
-
+  background: var(--accent); color: #fff; font-size: .6rem;
+  font-weight: 800; padding: 2px 6px; border-radius: 4px; letter-spacing: .04em;
+  margin-left: auto; flex-shrink: 0; white-space: nowrap;
 }
 
 .ai-body { padding: 16px 18px; font-size: .9rem; line-height: 1.7; }
@@ -1563,9 +1561,9 @@ function buildBaseFeedback(q, selectedIdx) {
 
   const headerText = isCorrect
 
-    ? 'Você Acertou! Analisando com IA Groq...'
+    ? 'Voce Acertou! ANALISANDO RESPOSTA COM IA 🤖'
 
-    : `Você Errou! Gabarito: ${correctLetter}) — Analisando com IA Groq...`;
+    : `Voce Errou! Gabarito: ${correctLetter}) — ANALISANDO RESPOSTA COM IA 🤖`;
 
 
 
@@ -1593,7 +1591,7 @@ function buildBaseFeedback(q, selectedIdx) {
 
           <div class="ai-spinner"></div>
 
-          <span class="ai-loading-text">🤖 Groq esta analisando a questao...</span>
+          <span class="ai-loading-text">🤖 ANALISANDO RESPOSTA COM IA...</span>
 
         </div>
 
@@ -1768,7 +1766,7 @@ async function selectAnswer(mode, qId, optIdx, btn) {
       fbDiv.innerHTML = `<div class="feedback show">
         <div class="fb-header ${isCorrect ? 'fb-correct' : 'fb-wrong'}">
           <span class="fb-icon">${isCorrect ? '\u2705' : '\u274c'}</span>
-          <span>${isCorrect ? 'Voce acertou! Reanalisando com IA...' : 'Voce errou. Reanalisando com IA... Gabarito: ' + correctLetter}</span>
+          <span>${isCorrect ? 'Voce acertou! ANALISANDO RESPOSTA COM IA 🤖' : 'Voce errou. ANALISANDO RESPOSTA COM IA 🤖 Gabarito: ' + correctLetter}</span>
         </div>
         <div class="fb-body">
           <div id="ai-slot-${q.id}">

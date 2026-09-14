@@ -1172,6 +1172,15 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); disp
 
 <script>
 
+if (typeof AbortController === 'undefined') {
+  window.AbortController = function() {
+    this.signal = { aborted: false };
+    this.abort = function() { this.signal.aborted = true; };
+  };
+}
+
+const HAS_ABORT = typeof AbortController !== 'undefined' && typeof AbortController.prototype.abort === 'function';
+
 // ════ DADOS ════
 
 const ALL_Q = [];
@@ -1239,15 +1248,14 @@ function updateSidebarStats() {
 
   const err = vals.filter(v => v === 'wrong').length;
 
-  document.getElementById('ss-total').textContent = total;
+  const el = (id) => document.getElementById(id);
+  const set = (id, val) => { const e = el(id); if (e) e.textContent = val; };
 
-  document.getElementById('ss-acertos').textContent = acc;
-
-  document.getElementById('ss-erros').textContent = err;
-
-  document.getElementById('ss-pct').textContent = total ? Math.round(acc/total*100)+'%' : '—';
-
-  document.getElementById('d-resp').textContent = total;
+  set('ss-total', total);
+  set('ss-acertos', acc);
+  set('ss-erros', err);
+  set('ss-pct', total ? Math.round(acc/total*100)+'%' : '—');
+  set('d-resp', total);
 
 }
 
@@ -1451,28 +1459,25 @@ Responda em português. Seja direto, didático e use os emojis dos títulos de s
 
     try {
 
-      const ctrl = new AbortController();
-      const timer = setTimeout(() => ctrl.abort(), 15000);
-
-      const res = await fetch(GROQ_URL, {
-
+      let fetchOpts = {
         method: 'POST',
-
         headers: {
-
           'Content-Type': 'application/json',
-
           'Authorization': `Bearer ${GROQ_KEY}`
-
         },
+        body: JSON.stringify(body)
+      };
 
-        body: JSON.stringify(body),
+      let ctrl, timer;
+      if (HAS_ABORT) {
+        ctrl = new AbortController();
+        fetchOpts.signal = ctrl.signal;
+        timer = setTimeout(() => ctrl.abort(), 15000);
+      }
 
-        signal: ctrl.signal
+      const res = await fetch(GROQ_URL, fetchOpts);
 
-      });
-
-      clearTimeout(timer);
+      if (timer) clearTimeout(timer);
 
 
 
@@ -1784,7 +1789,9 @@ async function selectAnswer(mode, qId, optIdx, btn) {
 
     const aiSlot = document.getElementById('ai-slot-' + qId);
     try {
+      console.log('[IA] Chamando Groq para Q' + qId + '...');
       const aiRes = await callGroqAI(q, optIdx, isCorrect);
+      console.log('[IA] Resposta OK, modelo:', aiRes.modelUsed);
       if (aiSlot) {
         aiSlot.innerHTML = `<div class="ai-panel">
           <div class="ai-panel-header">
@@ -2246,11 +2253,14 @@ function renderMacetes() {
 // ════ INIT ════
 
 async function init() {
-  document.getElementById('tab-dashboard').innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:60vh;"><div class="ai-spinner" style="width:40px;height:40px;margin-bottom:20px;"></div><p style="color:var(--muted);font-size:1rem;">Carregando banco de questoes...</p></div>';
+  const overlay = document.createElement('div');
+  overlay.id = 'loading-overlay';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;';
+  overlay.innerHTML = '<div class="ai-spinner" style="width:40px;height:40px;margin-bottom:20px;"></div><p style="color:var(--muted);font-size:1rem;">Carregando banco de questoes...</p>';
+  document.body.appendChild(overlay);
 
   await loadQuestions();
-
-  document.getElementById('tab-dashboard').innerHTML = '';
+  overlay.remove();
 
   populateQuizDisc();
   populateBankDisc();

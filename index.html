@@ -101,24 +101,18 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); disp
 /* ── GEMINI AI PANEL ── */
 
 .ai-loading {
-
-  display: flex; align-items: center; gap: 12px; padding: 18px 20px;
-
-  background: linear-gradient(135deg,rgba(99,102,241,.12),rgba(168,85,247,.08));
-
-  border-radius: 10px; border: 1px solid var(--accent); margin-top: 14px;
-
-  animation: fadeUp .3s ease;
-
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 18px; border-radius: 10px; border: 1px solid var(--accent-dim);
+  background: var(--accent-dim); animation: pulse 1.5s ease-in-out infinite;
 }
 
 .ai-spinner {
-
-  width: 22px; height: 22px; border: 3px solid var(--accent-dim);
-
+  width: 28px; height: 28px; border: 3px solid var(--accent-dim);
   border-top-color: var(--accent); border-radius: 50%;
-
   animation: spin .7s linear infinite; flex-shrink: 0;
+}
+
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .6; } }
 
 }
 
@@ -392,7 +386,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); disp
 
 }
 
-.q-card .q-body { overflow: hidden; transition: max-height .35s ease, opacity .25s ease; }
+.q-card .q-body { overflow: visible; transition: max-height .35s ease, opacity .25s ease; }
 
 .q-card.collapsed .q-body { max-height: 0 !important; opacity: 0; pointer-events: none; }
 
@@ -1599,7 +1593,7 @@ function buildBaseFeedback(q, selectedIdx) {
 
           <div class="ai-spinner"></div>
 
-          <span class="ai-loading-text">🤖 Groq Compound está analisando a questão e gerando sua explicação...</span>
+          <span class="ai-loading-text">🤖 Groq esta analisando a questao...</span>
 
         </div>
 
@@ -1907,16 +1901,6 @@ function renderQuizCard() {
   document.getElementById('btn-prev').disabled = quizIdx === 0;
 
   document.getElementById('qz-card').innerHTML = renderQuestion(q, 'qz-card', 'quiz');
-
-  const card = document.getElementById('qcard-' + q.id);
-
-  if (card) {
-
-    const body = card.querySelector('.q-body');
-
-    if (body) body.style.maxHeight = body.scrollHeight + 'px';
-
-  }
 
 }
 

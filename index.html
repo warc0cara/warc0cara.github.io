@@ -1,4 +1,4 @@
-﻿﻿﻿﻿<!-- v5.2 - 2026-09-09 -->
+﻿﻿<!-- v5.2 - 2026-09-09 -->
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
@@ -848,53 +848,73 @@ async function selectAnswer(mode, qId, optIdx, btn) {
   const q = ALL_Q.find(x => x.id === qId);
   if (!q) return;
 
-  // Bloquear re-resposta
   const fbDiv = document.getElementById('fb-' + qId);
-  if (fbDiv && fbDiv.innerHTML.trim() !== '') return;
+  const alreadyAnswered = fbDiv && fbDiv.innerHTML.trim() !== '';
 
   const correctLetter = (q.correct_answer || '').toUpperCase();
   const correctIdx = 'ABCDE'.indexOf(correctLetter);
   const isCorrect = optIdx === correctIdx;
 
-  // 1. Atualizar visual das alternativas imediatamente
-  const qCard = document.getElementById('qcard-' + qId);
-  if (qCard) {
-    const allBtns = qCard.querySelectorAll('.opt');
-    allBtns.forEach((b, i) => {
-      b.classList.add('disabled');
-      if (i === correctIdx) b.classList.add('correct');
-    });
-    if (!isCorrect) btn.classList.add('wrong');
+  if (!alreadyAnswered) {
+    // 1. Atualizar visual das alternativas imediatamente
+    const qCard = document.getElementById('qcard-' + qId);
+    if (qCard) {
+      const allBtns = qCard.querySelectorAll('.opt');
+      allBtns.forEach((b, i) => {
+        b.classList.add('disabled');
+        if (i === correctIdx) b.classList.add('correct');
+      });
+      if (!isCorrect) btn.classList.add('wrong');
+    }
+
+    // 2. Mostrar painel base (com loading da IA)
+    if (fbDiv) {
+      fbDiv.innerHTML = buildBaseFeedback(q, optIdx);
+    }
+
+    // 3. Atualizar quiz score (só na primeira vez)
+    if (mode === 'quiz') {
+      if (isCorrect) quizAcc++; else quizErr++;
+      updateQuizScore();
+    }
   }
 
-  // 2. Mostrar painel base (com loading da IA)
+  // 4. SEMPRE chamar IA ao clicar
   if (fbDiv) {
-    fbDiv.innerHTML = buildBaseFeedback(q, optIdx);
-  }
-
-  // 3. Atualizar quiz score
-  if (mode === 'quiz') {
-    if (isCorrect) quizAcc++; else quizErr++;
-    updateQuizScore();
-  }
-
-  // 4. Chamar Groq de forma assÃ­ncrona e injetar resultado (com fallback automÃ¡tico)
-  const aiSlot = document.getElementById('ai-slot-' + qId);
-  try {
-    const aiRes = await callGroqAI(q, optIdx, isCorrect);
-    if (aiSlot) {
-      aiSlot.innerHTML = `<div class="ai-panel">
-        <div class="ai-panel-header">
-          <span>ðŸ¤–</span>
-          <span>AnÃ¡lise IA</span>
-          <span class="ai-badge">GROQ: ${aiRes.modelUsed.toUpperCase()}</span>
+    if (alreadyAnswered) {
+      fbDiv.innerHTML = `<div class="feedback show">
+        <div class="fb-header ${isCorrect ? 'fb-correct' : 'fb-wrong'}">
+          <span class="fb-icon">${isCorrect ? '✅' : '❌'}</span>
+          <span>${isCorrect ? 'Você acertou! Reanalisando com IA...' : 'Você errou. Reanalisando com IA... Gabarito: ' + correctLetter}</span>
         </div>
-        <div class="ai-body">${markdownToHtml(aiRes.text)}</div>
+        <div class="fb-body">
+          <div id="ai-slot-${q.id}">
+            <div class="ai-loading">
+              <div class="ai-spinner"></div>
+              <span class="ai-loading-text">🤖 Groq Compound está analisando a questão...</span>
+            </div>
+          </div>
+        </div>
       </div>`;
     }
-  } catch(e) {
-    if (aiSlot) {
-      aiSlot.innerHTML = `<div class="ai-panel"><div class="ai-error">âš ï¸ IA indisponÃ­vel no momento: ${e.message}. Os dados do banco estÃ£o disponÃ­veis acima.</div></div>`;
+
+    const aiSlot = document.getElementById('ai-slot-' + qId);
+    try {
+      const aiRes = await callGroqAI(q, optIdx, isCorrect);
+      if (aiSlot) {
+        aiSlot.innerHTML = `<div class="ai-panel">
+          <div class="ai-panel-header">
+            <span>🤖</span>
+            <span>Análise IA</span>
+            <span class="ai-badge">GROQ: ${aiRes.modelUsed.toUpperCase()}</span>
+          </div>
+          <div class="ai-body">${markdownToHtml(aiRes.text)}</div>
+        </div>`;
+      }
+    } catch(e) {
+      if (aiSlot) {
+        aiSlot.innerHTML = `<div class="ai-panel"><div class="ai-error">⚠️ IA indisponível no momento: ${e.message}. Os dados do banco estão disponíveis acima.</div></div>`;
+      }
     }
   }
 }

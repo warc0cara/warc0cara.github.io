@@ -301,7 +301,10 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); disp
 
 
 
-.content { padding: 28px; flex: 1; }
+.content { padding: 28px; flex: 1; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--accent) var(--bg); }
+.content::-webkit-scrollbar { width: 10px; }
+.content::-webkit-scrollbar-track { background: var(--bg); }
+.content::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 5px; }
 
 .tab { display: none; }
 
@@ -714,6 +717,40 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); disp
   .opt { padding: 16px 14px; font-size: 1rem; }
 
   .opt-letter { width: 32px; height: 32px; font-size: .85rem; }
+
+  .quiz-header { flex-direction: column; gap: 8px; }
+
+  .config-group select { font-size: 1rem; padding: 12px; }
+
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .result-box strong { font-size: 2.5rem; }
+
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+
+  .sidebar { width: 64px; min-width: 64px; }
+
+  .brand-text, .nav-item button span:last-child, .sidebar-stats, .nav-count { display: none; }
+
+  .main { margin-left: 64px; }
+
+  .nav-item button { padding: 11px; justify-content: center; }
+
+  .content { padding: 20px; }
+
+  .opt { padding: 14px 12px; font-size: .95rem; min-height: 48px; }
+
+  .opt-letter { width: 34px; height: 34px; }
+
+  .q-text { font-size: 1rem; line-height: 1.7; }
+
+  .quiz-header { flex-wrap: wrap; gap: 8px; }
+
+  .stats-grid { grid-template-columns: repeat(3, 1fr); }
+
+  #scroll-btn { width: 48px; height: 48px; font-size: 1.3rem; bottom: 20px; right: 12px; }
 
 }
 

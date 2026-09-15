@@ -813,7 +813,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); disp
 
       <strong>Wellington Coelho</strong>
 
-      <span class="badge">HOMOLOGADO • Ins: 260000855150</span>
+      <span class="badge" id="exam-countdown"></span>
 
     </div>
 
@@ -2275,6 +2275,37 @@ function scrollBtnAction() {
   if (_atBottom) { window.scrollTo({top:0, behavior:'smooth'}); }
   else { window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'}); }
 }
+</script>
+
+<script>
+(function() {
+  var examDate = new Date('2026-10-11T13:00:00-03:00');
+  var now = new Date();
+  var diff = examDate - now;
+  var days = Math.floor(diff / (1000*60*60*24));
+  var el = document.getElementById('exam-countdown');
+  if (el) {
+    if (days > 0) {
+      el.textContent = 'Prova: 11/10/2026 — Faltam ' + days + ' dias';
+    } else if (days === 0) {
+      el.textContent = 'Prova HOJE!';
+      el.style.background = '#ef4444';
+    } else {
+      el.textContent = 'Prova realizada em 11/10/2026';
+    }
+  }
+
+  var twoDaysBefore = new Date(examDate.getTime() - 2*24*60*60*1000);
+  if (now >= twoDaysBefore && now <= examDate) {
+    var shown = localStorage.getItem('exam_popup_shown');
+    if (shown !== 'true') {
+      setTimeout(function() {
+        alert('AVISO: Faltam 2 dias para a prova do DATAPREV!\nData: 11/10/2026 (Sabado)\nHorario: 13h as 17h\nLocal: Confira seu cartao de convocacao');
+        localStorage.setItem('exam_popup_shown', 'true');
+      }, 2000);
+    }
+  }
+})();
 </script>
 
 </body>

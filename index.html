@@ -138,10 +138,10 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); disp
 
 }
 
-.ai-panel-header span { font-weight: 700; font-size: .88rem; color: var(--accent); }
+.ai-panel-header span { font-weight: 700; font-size: .88rem; }
 
 .ai-badge {
-  background: var(--accent); color: #fff; font-size: .6rem;
+  background: rgba(255,255,255,.15); color: #fff; font-size: .6rem;
   font-weight: 800; padding: 2px 6px; border-radius: 4px; letter-spacing: .04em;
   flex-shrink: 0; white-space: nowrap;
 }
@@ -1789,7 +1789,7 @@ async function selectAnswer(mode, qId, optIdx, btn) {
           <div class="ai-panel-header">
             <span>\ud83e\udd16</span>
             <span>Analise IA</span>
-            <span class="ai-badge">GROQ: ${aiRes.modelUsed.toUpperCase()}</span>
+            <span class="ai-badge">${aiRes.modelUsed.toUpperCase()}</span>
           </div>
           <div class="ai-body">${markdownToHtml(aiRes.text)}</div>
         </div>`;

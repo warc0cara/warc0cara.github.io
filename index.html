@@ -62,7 +62,7 @@
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 5px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-html { scrollbar-width: thin; scrollbar-color: var(--accent) var(--bg); }
+html { scrollbar-width: thin; scrollbar-color: var(--accent) var(--bg); overflow: hidden; height: 100vh; }
 
 [data-theme="light"] {
 
@@ -100,7 +100,7 @@ html { scrollbar-width: thin; scrollbar-color: var(--accent) var(--bg); }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-body { font-family: var(--font); background: var(--bg); color: var(--text); display: flex; min-height: 100vh; transition: background .25s, color .25s; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); display: flex; min-height: 100vh; max-height: 100vh; overflow: hidden; transition: background .25s, color .25s; }
 
 
 
@@ -262,7 +262,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); disp
 
 /* ── MAIN ── */
 
-.main { flex: 1; margin-left: 260px; display: flex; flex-direction: column; }
+.main { flex: 1; margin-left: 260px; display: flex; flex-direction: column; overflow: hidden; height: 100vh; }
 
 .topbar {
 
@@ -302,10 +302,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); disp
 
 
 
-.content { padding: 28px; flex: 1; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--accent) var(--bg); }
-.content::-webkit-scrollbar { width: 10px; }
-.content::-webkit-scrollbar-track { background: var(--bg); }
-.content::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 5px; }
+.content { padding: 28px; flex: 1 1 0; min-height: 0; overflow-y: auto; overflow-x: hidden; }
 
 .tab { display: none; }
 
